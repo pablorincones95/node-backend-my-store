@@ -1,32 +1,17 @@
 const express = require('express');
-const router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res) {
-  res.send('bienvenido a un servidor en express para apis');
-});
+const productsRouter = require('./products.routes');
+const categoriesRouter = require('./categories.routes');
+const usersRouter = require('./users.routes');
+const orderRouter = require('./orders.routes');
 
-/**
- * @Endpoints
- * name: products
- * description: products Endpoints
- */
+function routerApi(app) {
+  const router = express.Router();
+  app.use('/api/v1', router);
+  router.use('/products', productsRouter);
+  router.use('/categories', categoriesRouter);
+  router.use('/users', usersRouter);
+  router.use('/orders', orderRouter);
+}
 
-router.use('/api/v1/products', require('./products.routes'));
-
-/**
- * @Endpoints
- * name: users
- * description: users Endpoints
- */
-
-router.use('/api/v1/users', require('./users.routes'));
-/**
- * @Endpoints
- * name: categories
- * description: categories Endpoints
- */
-
-router.use('/api/v1/categories', require('./categories.routes'));
-
-module.exports = router;
+module.exports = routerApi;
